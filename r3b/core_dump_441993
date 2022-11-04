@@ -1,0 +1,55 @@
+#0  0x00007effdb5d0c6a in __GI___wait4 (pid=442053, stat_loc=stat_loc
+entry=0x7ffd84823dc8, options=options
+entry=0, usage=usage
+entry=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:27
+#1  0x00007effdb5d0c2b in __GI___waitpid (pid=<optimized out>, stat_loc=stat_loc
+entry=0x7ffd84823dc8, options=options
+entry=0) at waitpid.c:38
+#2  0x00007effdb53ff97 in do_system (line=<optimized out>) at ../sysdeps/posix/system.c:172
+#3  0x00007effdbc6c952 in TUnixSystem::StackTrace() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCore.so.6.16
+#4  0x00007effd0561d62 in FairLogger::LogFatalMessage () at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/fairtools/FairLogger.cxx:210
+#5  0x00007effd0aa3574 in std::function<void ()>::operator()() const (this=0x7effd0aaf720 <fair::Logger::fFatalCallback>) at /usr/include/c++/5/functional:2267
+#6  fair::Logger::~Logger (this=0x7ffd84826860, __in_chrg=<optimized out>) at /local/home/ar245054/FairSimulation/FairSoft-jun19p2/basics/FairLogger/logger/Logger.cxx:685
+#7  0x00007effcccf07dd in R3BAsciiGenerator::ReadEvent (this=0x7633900, primGen=0x2eb8cc0) at /local/home/ar245054/FairSimulation/R3BRoot/r3bgen/R3BAsciiGenerator.cxx:111
+#8  0x00007effd0721d78 in FairPrimaryGenerator::GenerateEvent (this=0x2eb8cc0, pStack=<optimized out>) at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/base/sim/FairPrimaryGenerator.cxx:203
+#9  0x00007effd070f276 in FairMCApplication::GeneratePrimaries (this=0x76c0b10) at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/base/sim/FairMCApplication.cxx:1172
+#10 0x00007effcc560fad in TG4PrimaryGeneratorAction::GeneratePrimaries(G4Event*) () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/libgeant4vmc.so
+#11 0x00007effcbd70640 in G4RunManager::GenerateEvent(int) () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/libG4run.so
+#12 0x00007effcbd6ca12 in G4RunManager::ProcessOneEvent(int) () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/libG4run.so
+#13 0x00007effcbd6ab7b in G4RunManager::BeamOn(int, char const*, int) () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/libG4run.so
+#14 0x00007effcc56cca5 in TG4RunManager::ProcessRun(int) () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/libgeant4vmc.so
+#15 0x00007effd0712919 in FairMCApplication::RunMC (this=0x76c0b10, nofEvents=100) at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/base/sim/FairMCApplication.cxx:465
+#16 0x00007effd13e5cd6 in ?? ()
+#17 0x00000000074d6090 in ?? ()
+#18 0x00007effd8bab925 in llvm::RuntimeDyldImpl::resolveExternalSymbols() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#19 0x00007effd8bade82 in llvm::RuntimeDyldImpl::resolveRelocations() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#20 0x0000000002c7de80 in ?? ()
+#21 0x00000000050c8060 in ?? ()
+#22 0x00000000050c8060 in ?? ()
+#23 0x000000000a2ede80 in ?? ()
+#24 0x000000000a2ede80 in ?? ()
+#25 0x00007effd013b8d0 in ?? () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libVMC.so.6.16
+#26 0x00000000050c8060 in ?? ()
+#27 0x00000000050c8060 in ?? ()
+#28 0x00000000050c8060 in ?? ()
+#29 0x00000000073e96d0 in ?? ()
+#30 0x0000000002c83e30 in ?? ()
+#31 0x0000000002c83e30 in ?? ()
+#32 0x0000000002c83e30 in ?? ()
+#33 0x0000000002c83e30 in ?? ()
+#34 0x00000000073e96d0 in ?? ()
+#35 0x00000000073e96d0 in ?? ()
+#36 0x0000000002eb8cc0 in ?? ()
+#37 0x0000000007633900 in ?? ()
+#38 0x0000000007633900 in ?? ()
+#39 0x0000000084828140 in ?? ()
+#40 0x06420ae2e1124200 in ?? ()
+#41 0x0000000000000002 in ?? ()
+#42 0x00007effd8bcffeb in llvm::object::ELFObjectFile<llvm::object::ELFType<(llvm::support::endianness)1, true> >::getSymbolFlags(llvm::object::DataRefImpl) const () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#43 0x0000000007528890 in ?? ()
+#44 0x00000000073e96d0 in ?? ()
+#45 0x0000000002f09d40 in ?? ()
+#46 0x00007effd84657b0 in ?? () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#47 0x0000000002f09d40 in ?? ()
+#48 0x0000000002f09d40 in ?? ()
+#49 0x0000000000000000 in ?? ()

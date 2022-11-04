@@ -1,0 +1,234 @@
+#include <iomanip>
+#include <iostream>
+#include "TGeoManager.h"
+#include "TMath.h"
+
+TGeoManager* gGeoMan;
+
+//void create_fi11_geo_s454(const char* geoTag)
+void create_double_big_fi11()
+{
+
+  //fGlobalTrans->SetTranslation(0.0,0.0,0.0);
+
+  // -------   Load media from media file   -----------------------------------
+  FairGeoLoader*    geoLoad = new FairGeoLoader("TGeo","FairGeoLoader");
+  FairGeoInterface* geoFace = geoLoad->getGeoInterface();
+  TString geoPath = gSystem->Getenv("VMCWORKDIR");
+  TString medFile = geoPath + "/geometry/media_r3b.geo";
+  geoFace->setMediaFile(medFile);
+  geoFace->readMedia();
+  gGeoMan = gGeoManager;
+  // --------------------------------------------------------------------------
+
+
+
+  // -------   Geometry file name (output)   ----------------------------------
+  //TString geoFileName = geoPath + "/geometry/fi11_";
+  //geoFileName = geoFileName + geoTag + ".geo.root";
+  TString geoFileName = geoPath + "/geometry/double_big_fi11_3m.geo.root";
+  // --------------------------------------------------------------------------
+
+
+
+  // -----------------   Get and create the required media    -----------------
+  FairGeoMedia*   geoMedia = geoFace->getMedia();
+  FairGeoBuilder* geoBuild = geoLoad->getGeoBuilder();
+
+  FairGeoMedium* mAir      = geoMedia->getMedium("Air");
+  if ( ! mAir ) Fatal("Main", "FairMedium Air not found");
+  geoBuild->createMedium(mAir);
+  TGeoMedium* pMed2 = gGeoMan->GetMedium("Air");
+  if ( ! pMed2 ) Fatal("Main", "Medium Air not found");
+
+  FairGeoMedium* mVac      = geoMedia->getMedium("vacuum");
+  if ( ! mVac ) Fatal("Main", "FairMedium vacuum not found");
+  geoBuild->createMedium(mVac);
+  TGeoMedium* pMed1 = gGeoMan->GetMedium("vacuum");
+  if ( ! pMed1 ) Fatal("Main", "Medium vacuum not found");
+  
+  FairGeoMedium* mGfi      = geoMedia->getMedium("plasticForGFI");
+  if ( ! mGfi ) Fatal("Main", "FairMedium plasticForGFI not found");
+  geoBuild->createMedium(mGfi);
+  TGeoMedium* pMed35 = gGeoMan->GetMedium("plasticForGFI");
+  if ( ! pMed35 ) Fatal("Main", "Medium plasticForGFI not found");
+
+  FairGeoMedium* mAl      = geoMedia->getMedium("aluminium");
+  if ( ! mAl ) Fatal("Main", "FairMedium aluminium not found");
+  geoBuild->createMedium(mAl);
+  TGeoMedium* pMed21 = gGeoMan->GetMedium("aluminium");
+  if ( ! pMed21 ) Fatal("Main", "Medium aluminium not found");
+  // --------------------------------------------------------------------------
+
+
+
+  // --------------   Create geometry and top volume  -------------------------
+  gGeoMan = (TGeoManager*)gROOT->FindObject("FAIRGeom");
+  gGeoMan->SetName("Fi11geom");
+  TGeoVolume* top = new TGeoVolumeAssembly("TOP");
+  gGeoMan->SetTopVolume(top);
+  // --------------------------------------------------------------------------
+  
+  Float_t dx = 0;//-73.274339; //dE tracker, correction due to wrong angle
+  Float_t dy = 0.069976;
+  Float_t dz = 0;//513.649524;
+  
+  TGeoRotation *pMatrix3 = new TGeoRotation();
+  //pMatrix3->RotateY(-16.7);
+  TGeoCombiTrans*
+  pMatrix2 = new TGeoCombiTrans("", dx,dy,dz,pMatrix3);
+
+  dx = 0;//-73.274339; //dE tracker, correction due to wrong angle
+  dy = 0.069976+300;
+  dz = 0;//513.649524;
+  
+  //pMatrix3->RotateY(-16.7);
+  TGeoCombiTrans*
+  pMatrix4 = new TGeoCombiTrans("", dx,dy,dz,pMatrix3);
+
+  dx = 0.; //dE tracker, correction due to wrong angle
+  dy = 0.;
+  dz = 0.;
+  
+  //pMatrix3->RotateY(-16.7);
+  TGeoCombiTrans*
+  pMatrix00 = new TGeoCombiTrans("", dx,dy,dz,pMatrix3);
+
+  dx = 0.; //dE tracker, correction due to wrong angle
+  dy = 150.;
+  dz = 0.;
+  
+  //pMatrix3->RotateY(-16.7);
+  TGeoCombiTrans*
+    pMatrix01 = new TGeoCombiTrans("", dx,dy,dz,pMatrix3);
+  
+  // World definition
+  TGeoVolume* pWorld = gGeoManager->GetTopVolume();
+  pWorld->SetVisLeaves(kTRUE);
+  
+  // SHAPES, VOLUMES AND GEOMETRICAL HIERARCHY 
+
+  TGeoShape* Fib_box = new TGeoBBox("fib_box",
+					 100., 
+				    140., 
+					 300.);
+  
+  //TGeoVolume* pFibEnv_log = new TGeoVolume("FibEnv_log", Fib_box, pMed1); // Vacuum
+  TGeoVolume* pFibEnv_log = new TGeoVolume("FibEnv_log", Fib_box, pMed2); // Air
+  //pFibEnv_log->SetVisLeaves(kTRUE);
+  //pFibEnv_log->SetLineColor(kBlue);
+  //pWorld->AddNode(pFibEnv_log, 0, pMatrix00);v
+    
+  //Volume Fi
+  TGeoVolume*   pFiLogWorld = new TGeoVolumeAssembly("FI");
+  pFiLogWorld->SetVisLeaves(kTRUE);
+
+  
+  // Volume: Fi11LogWorld
+  
+  TGeoVolume*   pFi11LogWorld = new TGeoVolumeAssembly("FI11");
+  pFi11LogWorld->SetVisLeaves(kTRUE);
+
+  TGeoVolume*   pFi12LogWorld = new TGeoVolumeAssembly("FI12");
+  pFi12LogWorld->SetVisLeaves(kTRUE);
+
+  
+  // Global positioning
+  //pFibEnv_log->AddNode(pFiLogWorld, 0, pMatrix00);
+  pWorld->AddNode(pFiLogWorld, 0, pMatrix00);
+  //pFiLogWorld->AddNode(pFibEnv_log, 0, pMatrix01);
+  pFiLogWorld->AddNode(pFi11LogWorld, 0, pMatrix2);
+  pFiLogWorld->AddNode(pFi12LogWorld, 0, pMatrix4);
+
+  
+  Float_t detector_height = 100.000000 ;
+  Float_t fiber_thickness = 0.050000 ; 
+  Int_t fiber_nbr = 10000;
+  Float_t dead_layer = 0.9;
+  Float_t air_layer = 0.01; // relative to fiber_thickness
+  Float_t  detector_width = fiber_nbr*fiber_thickness*(1+air_layer);  
+
+
+  // single fiber
+  TGeoShape *pFi11Box = new TGeoBBox("Fi11Box", detector_height/2, fiber_thickness/2 ,fiber_thickness/2);
+  
+  //TGeoVolume* pFi11Log = new TGeoVolume("FI11Log",pFi11Box, pMed35);
+  TGeoVolume* pFi11Log = new TGeoVolume("FI11Log",pFi11Box, pMed2);
+
+  TGeoShape *pFi11BoxActive = new TGeoBBox("Fi11BoxActive", detector_height/2 - 0.0001, (fiber_thickness * dead_layer)/2, (fiber_thickness * dead_layer)/2);
+
+  //TGeoVolume* pFi11LogActive = new TGeoVolume("FI11LogActive",pFi11BoxActive,pMed35);
+  TGeoVolume* pFi11LogActive = new TGeoVolume("FI11LogActive",pFi11BoxActive,pMed1);
+
+  TGeoRotation *pMatrixBox = new TGeoRotation();
+  pMatrixBox->RotateY(0.0);
+
+  // pGFILog -> AddNode(pGFILogActive, 0, new TGeoCombiTrans("",0,0,0, pMatrixBox));
+  pFi11Log -> AddNode(pFi11LogActive, 0, new TGeoCombiTrans());
+  
+  pFi11LogActive->SetLineColor(kViolet);
+  pFi11LogActive->SetVisLeaves(kTRUE);
+  pFi11Log->SetLineColor((Color_t) 4);
+  pFi11Log->SetVisLeaves(kTRUE);
+
+  
+  Int_t real_fiber_id = 0;
+  
+  for(int fiber_id = 0; fiber_id < fiber_nbr ; fiber_id++)
+  {
+	pFi11LogWorld->AddNode(pFi11Log, real_fiber_id++, 
+		new TGeoCombiTrans("", 
+			0,
+			-(fiber_thickness) / 2,
+			-detector_width / 2 + fiber_thickness/2  + (fiber_id + (fiber_id * air_layer)) * fiber_thickness , 
+			pMatrixBox
+		)
+			       
+			       );
+  }
+
+  for(int fiber_id = 0; fiber_id < fiber_nbr ; fiber_id++)
+  {
+	pFi12LogWorld->AddNode(pFi11Log, real_fiber_id++, 
+		new TGeoCombiTrans("", 
+			0,
+			-(fiber_thickness) / 2,
+			-detector_width / 2 + fiber_thickness/2  + (fiber_id + (fiber_id * air_layer)) * fiber_thickness , 
+			pMatrixBox
+		)
+			       
+			       );
+  }
+  
+//  Add the sensitive part
+//  AddSensitiveVolume(pGFILog);
+//  fNbOfSensitiveVol+=1;
+//TGeoVolume *aTra = new TGeoVolumeAssembly("ATRA");
+//pTargetEnveloppe_log->AddNode(aTra, 1, GetGlobalPosition(t00));
+  TGeoRotation *pMatrix0 = new TGeoRotation();
+  //top->AddNode(pFi11Log, 1, pMatrix0); 
+  dx = 0.00; 
+  dy = 0.00;
+  dz = 100;
+  
+  TGeoRotation *gRot3 = new TGeoRotation();
+  /*gRot3->RotateX(0.);
+  gRot3->RotateY(0.); // s412
+  gRot3->RotateZ(0.);
+  */
+  TGeoCombiTrans* pMatrix0_bis = new TGeoCombiTrans("", dx,dy,dz,gRot3);
+  //top->AddNode(pFi11Log, 2, pMatrix0_bis); 
+
+  
+  // ---------------   Finish   -----------------------------------------------
+  gGeoMan->CloseGeometry();
+//  gGeoMan->CheckOverlaps(0.001);
+  gGeoMan->PrintOverlaps();
+  gGeoMan->Test();
+
+  TFile* geoFile = new TFile(geoFileName, "RECREATE");
+  top->Write();
+  top->Draw();
+  //geoFile->Close();
+  // --------------------------------------------------------------------------
+}

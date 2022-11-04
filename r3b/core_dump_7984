@@ -1,0 +1,35 @@
+#0  0x00007fb41e209dba in __GI___wait4 (pid=8020, stat_loc=stat_loc
+entry=0x7ffeeaf92e18, options=options
+entry=0, usage=usage
+entry=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:27
+#1  0x00007fb41e209d7b in __GI___waitpid (pid=<optimized out>, stat_loc=stat_loc
+entry=0x7ffeeaf92e18, options=options
+entry=0) at waitpid.c:38
+#2  0x00007fb41e1790e7 in do_system (line=<optimized out>) at ../sysdeps/posix/system.c:172
+#3  0x00007fb41e8a2952 in TUnixSystem::StackTrace() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCore.so.6.16
+#4  0x00007fb413a42d62 in FairLogger::LogFatalMessage () at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/fairtools/FairLogger.cxx:210
+#5  0x00007fb412d67574 in std::function<void ()>::operator()() const (this=0x7fb412d73720 <fair::Logger::fFatalCallback>) at /usr/include/c++/5/functional:2267
+#6  fair::Logger::~Logger (this=0x7ffeeaf968e0, __in_chrg=<optimized out>) at /local/home/ar245054/FairSimulation/FairSoft-jun19p2/basics/FairLogger/logger/Logger.cxx:685
+#7  0x00007fb413c02ae9 in FairModule::SetGeometryFileName (this=this
+entry=0x161cf20, fname=<incomplete type>) at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/base/sim/FairModule.cxx:253
+#8  0x00007fb41236565f in R3BDetector::R3BDetector (this=0x161cf20, name=..., detId=<optimized out>, geoFile=..., combi=...) at /local/home/ar245054/FairSimulation/R3BRoot/r3bbase/R3BDetector.cxx:46
+#9  0x00007fb41e52d581 in R3BFi10::R3BFi10 (this=0x161cf20, geoFile=..., combi=...) at /local/home/ar245054/FairSimulation/R3BRoot/fi10/R3BFi10.cxx:61
+#10 0x00007fb41e52dfed in R3BFi10::R3BFi10 (this=0x161cf20, geoFile=..., trans=..., rot=...) at /local/home/ar245054/FairSimulation/R3BRoot/fi10/R3BFi10.cxx:52
+#11 0x00007fb41e514100 in ?? ()
+#12 0x0000000000000001 in ?? ()
+#13 0x31df2ad2396c1b00 in ?? ()
+#14 0x0000000000713f10 in ?? ()
+#15 0x00007fb41e287983 in __GI__dl_catch_error (objname=0x78f9b0, objname
+entry=0x713f10, errstring=0x7ffeeaf97c80, errstring
+entry=0x713f18, mallocedp=0x7fb41e518000, mallocedp
+entry=0x713f08, operate=operate
+entry=0x7fb41e08e490 <dlsym_doit>, args=args
+entry=0x7ffeeaf97060) at dl-error-skeleton.c:227
+#16 0x00007fb41e08eb59 in _dlerror_run (operate=0x7fb41e08e490 <dlsym_doit>, args=0x7ffeeaf97060) at dlerror.c:170
+#17 0x00007fb41e08e53a in __dlsym (handle=<optimized out>, name=0x675c830 "\240/\213\004") at dlsym.c:72
+#18 0x00007fb41d054245 in llvm::sys::DynamicLibrary::SearchForAddressOfSymbol(char const*) () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#19 0x00007fb41e1be00b in _int_free (av=0x7ffeeaf97110, p=0x7ffeeaf97200, have_lock=<optimized out>) at malloc.c:4342
+#20 0x00007fb41b7e1925 in llvm::RuntimeDyldImpl::resolveExternalSymbols() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#21 0x00007fb41b7e3e82 in llvm::RuntimeDyldImpl::resolveRelocations() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCling.so
+#22 0x0000000002b917f0 in ?? ()
+#23 0x0000000000000000 in ?? ()

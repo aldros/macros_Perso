@@ -1,0 +1,19 @@
+#0  0x00007fcb80a9edba in __GI___wait4 (pid=35229, stat_loc=stat_loc
+entry=0x7fff703b6d08, options=options
+entry=0, usage=usage
+entry=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:27
+#1  0x00007fcb80a9ed7b in __GI___waitpid (pid=<optimized out>, stat_loc=stat_loc
+entry=0x7fff703b6d08, options=options
+entry=0) at waitpid.c:38
+#2  0x00007fcb80a0e0e7 in do_system (line=<optimized out>) at ../sysdeps/posix/system.c:172
+#3  0x00007fcb81137952 in TUnixSystem::StackTrace() () from /local/home/ar245054/FairSimulation/build_FairSoft/lib/root/libCore.so.6.16
+#4  0x00007fcb762d7d62 in FairLogger::LogFatalMessage () at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/fairtools/FairLogger.cxx:210
+#5  0x00007fcb755fc574 in std::function<void ()>::operator()() const (this=0x7fcb75608720 <fair::Logger::fFatalCallback>) at /usr/include/c++/5/functional:2267
+#6  fair::Logger::~Logger (this=0x7fff703ba7d0, __in_chrg=<optimized out>) at /local/home/ar245054/FairSimulation/FairSoft-jun19p2/basics/FairLogger/logger/Logger.cxx:685
+#7  0x00007fcb76497ae9 in FairModule::SetGeometryFileName (this=this
+entry=0x1bf55e0, fname=<incomplete type>) at /local/home/ar245054/FairSimulation/FairRoot-18.2.1/base/sim/FairModule.cxx:253
+#8  0x00007fcb74bfa65f in R3BDetector::R3BDetector (this=0x1bf55e0, name=..., detId=<optimized out>, geoFile=..., combi=...) at /local/home/ar245054/FairSimulation/R3BRoot/r3bbase/R3BDetector.cxx:46
+#9  0x00007fcb7413e581 in R3BFi11::R3BFi11 (this=0x1bf55e0, geoFile=..., combi=...) at /local/home/ar245054/FairSimulation/R3BRoot/fi11/R3BFi11.cxx:61
+#10 0x00007fcb7413efed in R3BFi11::R3BFi11 (this=0x1bf55e0, geoFile=..., trans=..., rot=...) at /local/home/ar245054/FairSimulation/R3BRoot/fi11/R3BFi11.cxx:52
+#11 0x00007fcb768b15c5 in ?? ()
+#12 0x0000000000000000 in ?? ()
